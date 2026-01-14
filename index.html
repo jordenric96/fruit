@@ -3,15 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mijn Fruit Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;500;700&display=swap" rel="stylesheet">
+    <title>Mijn Fruit Dashboard 2.0</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #1a2f23;
-            --card-bg: rgba(255, 255, 255, 0.1);
-            --card-border: rgba(255, 255, 255, 0.2);
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.15);
             --accent-green: #4ade80;
             --accent-pink: #f472b6;
+            --accent-yellow: #facc15;
             --text-color: #ffffff;
         }
 
@@ -27,125 +28,159 @@
         h1 {
             text-align: center;
             font-size: 3rem;
-            margin-bottom: 40px;
+            margin-bottom: 50px;
             text-shadow: 0 0 20px rgba(74, 222, 128, 0.5);
             letter-spacing: 2px;
         }
 
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 35px;
             max-width: 1400px;
             margin: 0 auto;
         }
 
         .fruit-card {
             background: var(--card-bg);
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1px solid var(--card-border);
             border-radius: 24px;
-            padding: 25px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            position: relative;
-            overflow: hidden;
+            padding: 30px;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            position: relative;
         }
 
         .fruit-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 40px 0 rgba(74, 222, 128, 0.2);
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 50px 0 rgba(74, 222, 128, 0.15);
             border-color: var(--accent-green);
+            background: rgba(255, 255, 255, 0.12);
         }
 
-        .fruit-header {
+        .header-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
             margin-bottom: 15px;
         }
 
-        .fruit-index {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            font-size: 3rem;
-            opacity: 0.1;
-            font-weight: 700;
-        }
-
         .fruit-name {
-            font-size: 1.5rem;
+            font-size: 1.6rem;
             color: var(--accent-green);
             margin: 0;
-            line-height: 1.2;
+            line-height: 1.1;
+            font-weight: 600;
         }
 
         .latin-name {
-            font-size: 0.9rem;
-            opacity: 0.7;
+            font-size: 0.85rem;
+            opacity: 0.6;
             font-style: italic;
-            margin-top: 5px;
+            margin-top: 4px;
             display: block;
         }
 
+        .fruit-number {
+            background: rgba(255,255,255,0.1);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Nieuw: Seizoen Badge */
+        .season-badge {
+            background: rgba(74, 222, 128, 0.15);
+            color: var(--accent-green);
+            padding: 6px 12px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            display: inline-block;
+            margin-bottom: 20px;
+            border: 1px solid rgba(74, 222, 128, 0.3);
+            font-weight: 500;
+        }
+
         .countdown-container {
-            margin: 20px 0;
             text-align: center;
+            margin: 10px 0 25px 0;
         }
 
         .days-left {
-            font-size: 2.5rem;
+            font-size: 3.5rem;
             font-weight: 700;
             color: #fff;
+            line-height: 1;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
         .label {
-            font-size: 1rem;
+            font-size: 0.9rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
-            opacity: 0.8;
+            letter-spacing: 2px;
+            opacity: 0.7;
+            margin-top: 5px;
         }
 
-        /* De Groei Animatie */
+        /* Groei Balk */
         .growth-track {
-            height: 12px;
-            background: rgba(255,255,255,0.1);
+            height: 14px;
+            background: rgba(0,0,0,0.3);
             border-radius: 10px;
             position: relative;
-            margin-top: 10px;
+            margin-bottom: 25px;
         }
 
         .growth-vine {
             height: 100%;
             background: linear-gradient(90deg, var(--accent-green), var(--accent-pink));
             border-radius: 10px;
-            width: 0%; /* Wordt aangepast met JS */
-            transition: width 1s ease-in-out;
+            width: 0%; 
             position: relative;
-            box-shadow: 0 0 10px var(--accent-green);
+            box-shadow: 0 0 15px rgba(74, 222, 128, 0.4);
+            transition: width 1.5s ease-out;
         }
 
-        /* Het blaadje/icoontje aan het einde van de balk */
         .growth-icon {
             position: absolute;
-            right: -10px;
-            top: -14px;
-            font-size: 1.5rem;
-            filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            right: -12px;
+            top: -16px;
+            font-size: 1.8rem;
+            filter: drop-shadow(0 4px 4px rgba(0,0,0,0.4));
+            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        .status-msg {
-            margin-top: 10px;
+        /* Nieuw: Extra Info Sectie */
+        .info-box {
+            background: rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 15px;
             font-size: 0.9rem;
-            text-align: right;
-            color: var(--accent-pink);
-            font-weight: bold;
+            line-height: 1.5;
+            color: rgba(255,255,255,0.9);
+            border-left: 3px solid var(--accent-pink);
         }
 
-        /* Mobiele aanpassing */
+        .info-title {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            opacity: 0.6;
+            margin-bottom: 4px;
+            display: block;
+            font-weight: 700;
+        }
+
         @media (max-width: 600px) {
             h1 { font-size: 2rem; }
             .dashboard-grid { grid-template-columns: 1fr; }
@@ -154,21 +189,20 @@
 </head>
 <body>
 
-    <h1>🌱 Fruit Tracker 🍓</h1>
+    <h1>🌿 Garden Tracker 🍓</h1>
 
     <div class="dashboard-grid" id="dashboard">
         </div>
 
     <script>
-        // CONFIGURATIE: Pas hier de oogstmaanden aan (0 = januari, 5 = juni, etc.)
-        // Voor 'Twotimers' voeg je twee objecten toe in de 'seasons' array.
-        // Data is een schatting voor België/Nederland, pas gerust aan!
+        // DATA OBJECT: Nu met 'displaySeason' en 'info'
         const fruitData = [
             {
                 id: 1,
                 name: "Sugana Red Twotimer",
                 latin: "Rubus idaeus",
-                // Zomer (juni/juli) en Herfst (aug-okt)
+                displaySeason: "Juni - Juli & Aug - Okt",
+                info: "De enige framboos die écht twee keer op dezelfde tak draagt. Grote, helderrode vruchten.",
                 seasons: [
                     { startMonth: 5, startDay: 15, endMonth: 6, endDay: 30 }, 
                     { startMonth: 7, startDay: 15, endMonth: 9, endDay: 15 }
@@ -178,46 +212,51 @@
                 id: 2,
                 name: "Tayberry",
                 latin: "Rubus Tayberry",
-                // Juli
+                displaySeason: "Juni - Juli",
+                info: "Kruising tussen braam en framboos. Grote vruchten, aromatisch en iets zuurder.",
                 seasons: [
-                    { startMonth: 6, startDay: 1, endMonth: 7, endDay: 15 }
+                    { startMonth: 5, startDay: 25, endMonth: 6, endDay: 20 }
                 ]
             },
             {
                 id: 3,
                 name: "Fallgold",
-                latin: "Rubus idaeus",
-                // Gele framboos, laat (aug-okt)
+                latin: "Rubus idaeus 'Fallgold'",
+                displaySeason: "Juli - September",
+                info: "Gele goudkleurige framboos. Vaak zoeter en zachter dan de rode varianten.",
                 seasons: [
-                    { startMonth: 7, startDay: 1, endMonth: 9, endDay: 15 }
+                    { startMonth: 6, startDay: 10, endMonth: 8, endDay: 20 }
                 ]
             },
             {
                 id: 4,
                 name: "Twotimer Solu Red",
                 latin: "Rubus idaeus",
-                // Vergelijkbaar met Sugana Red
+                displaySeason: "Juni & Augustus - Sept",
+                info: "Compacte groeier met stevige vruchten. Ideaal voor een dubbele oogst.",
                 seasons: [
                     { startMonth: 5, startDay: 20, endMonth: 6, endDay: 25 },
-                    { startMonth: 7, startDay: 20, endMonth: 9, endDay: 10 }
+                    { startMonth: 7, startDay: 15, endMonth: 8, endDay: 30 }
                 ]
             },
             {
                 id: 5,
                 name: "Autumn Passion",
                 latin: "Rubus idaeus x occidentalis",
-                // Paarse framboos, late zomer
+                displaySeason: "Juli - Augustus",
+                info: "Paarse vrucht met een exotische smaak (kruising zwarte framboos).",
                 seasons: [
-                    { startMonth: 6, startDay: 15, endMonth: 8, endDay: 15 }
+                    { startMonth: 6, startDay: 15, endMonth: 7, endDay: 30 }
                 ]
             },
             {
                 id: 6,
                 name: "Jonkheer van Tets",
                 latin: "Ribes rubrum",
-                // Rode bes, vroeg (eind juni)
+                displaySeason: "Eind Juni - Juli",
+                info: "De klassieke rode aalbes. Vroeg rijp, hoge opbrengst en friszuur van smaak.",
                 seasons: [
-                    { startMonth: 5, startDay: 25, endMonth: 6, endDay: 20 }
+                    { startMonth: 5, startDay: 20, endMonth: 6, endDay: 15 }
                 ]
             }
         ];
@@ -225,62 +264,49 @@
         function getNextHarvest(seasons) {
             const now = new Date();
             const currentYear = now.getFullYear();
-            
-            // Verzamel alle start/eind data voor dit jaar en volgend jaar
             let possibilities = [];
 
             seasons.forEach(season => {
-                // Oogst dit jaar
                 let start = new Date(currentYear, season.startMonth, season.startDay);
                 let end = new Date(currentYear, season.endMonth, season.endDay);
                 possibilities.push({ start, end });
-
-                // Oogst volgend jaar (voor als we in december zitten)
+                // Check volgend jaar ook
                 let startNext = new Date(currentYear + 1, season.startMonth, season.startDay);
                 let endNext = new Date(currentYear + 1, season.endMonth, season.endDay);
                 possibilities.push({ start: startNext, end: endNext });
             });
 
-            // Sorteer op datum
             possibilities.sort((a, b) => a.start - b.start);
 
-            // Vind de eerstvolgende
             for (let p of possibilities) {
-                // Als we midden in de oogst zitten
                 if (now >= p.start && now <= p.end) {
-                    return { status: 'active', date: p.end, range: p }; 
+                    return { status: 'active', date: p.end }; 
                 }
-                // Als de oogst nog moet komen
                 if (now < p.start) {
-                    return { status: 'upcoming', date: p.start, range: p };
+                    return { status: 'upcoming', date: p.start };
                 }
             }
-            return null; // Should not happen given next year logic
+            return null;
         }
 
         function calculateProgress(targetDate) {
             const now = new Date();
-            // We nemen een arbitraire "start" van het wachten van 90 dagen geleden 
-            // OF het begin van het jaar om de bar leuk te laten vullen.
-            // Laten we zeggen: 100 dagen voor de oogst begint de balk te lopen.
-            const maxWaitDays = 100; 
-            
+            const maxWaitDays = 120; // Dagen voordat de balk begint te lopen
             const diffTime = targetDate - now;
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             
-            if (diffDays <= 0) return 100; // Oogsttijd!
-
+            if (diffDays <= 0) return 100;
             let percentage = 100 - ((diffDays / maxWaitDays) * 100);
-            return Math.max(0, Math.min(100, percentage)); // Clamp between 0 and 100
+            return Math.max(0, Math.min(100, percentage));
         }
 
         function getGrowthIcon(percentage, isActive) {
-            if (isActive) return "🍓"; // Oogsten!
-            if (percentage < 20) return "🌱"; // Zaadje/net wakker
-            if (percentage < 50) return "🌿"; // Groeien
-            if (percentage < 80) return "🌳"; // Struik
-            if (percentage < 95) return "🌸"; // Bloesem
-            return "🍇"; // Bijna klaar
+            if (isActive) return "🍓"; 
+            if (percentage < 15) return "🌱"; 
+            if (percentage < 40) return "🌿"; 
+            if (percentage < 70) return "🌳"; 
+            if (percentage < 90) return "🌸"; 
+            return "🍇"; 
         }
 
         function renderDashboard() {
@@ -295,41 +321,50 @@
                 let isActive = false;
 
                 if (harvestInfo.status === 'active') {
-                    displayText = "PLUKKEN MAAR!";
-                    subText = "Geniet ervan!";
+                    displayText = "NU!";
+                    subText = "Oogsttijd";
                     progress = 100;
                     isActive = true;
                 } else {
                     const diffTime = harvestInfo.date - now;
                     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    displayText = `${diffDays}`;
+                    displayText = diffDays;
                     subText = diffDays === 1 ? "Dag te gaan" : "Dagen te gaan";
                     progress = calculateProgress(harvestInfo.date);
                 }
 
                 const icon = getGrowthIcon(progress, isActive);
-                const barColor = isActive ? 'linear-gradient(90deg, #f472b6, #ef4444)' : 'linear-gradient(90deg, #4ade80, #f472b6)';
+                // Twotimer specifieke kleur voor info box (roze accent) vs standaard
+                const activeColor = isActive ? '#ef4444' : '#f472b6';
 
                 const cardHTML = `
                     <div class="fruit-card">
-                        <div class="fruit-index">${fruit.id}</div>
-                        <div class="fruit-header">
-                            <h2 class="fruit-name">${fruit.name}</h2>
-                            <span class="latin-name">${fruit.latin}</span>
-                        </div>
-                        
-                        <div class="countdown-container">
-                            <div class="days-left">${displayText}</div>
-                            <div class="label">${subText}</div>
-                        </div>
+                        <div>
+                            <div class="header-section">
+                                <div>
+                                    <h2 class="fruit-name">${fruit.name}</h2>
+                                    <span class="latin-name">${fruit.latin}</span>
+                                </div>
+                                <div class="fruit-number">${fruit.id}</div>
+                            </div>
+                            
+                            <div class="season-badge">📅 ${fruit.displaySeason}</div>
 
-                        <div class="growth-container">
-                            <div class="status-msg">${isActive ? "Oogst seizoen!" : "Groeiproces"}</div>
+                            <div class="countdown-container">
+                                <div class="days-left">${displayText}</div>
+                                <div class="label">${subText}</div>
+                            </div>
+
                             <div class="growth-track">
-                                <div class="growth-vine" style="width: ${progress}%; background: ${barColor}">
+                                <div class="growth-vine" style="width: ${progress}%; background: linear-gradient(90deg, #4ade80, ${activeColor})">
                                     <div class="growth-icon" style="transform: scale(${1 + (progress/100)})">${icon}</div>
                                 </div>
                             </div>
+                        </div>
+
+                        <div class="info-box" style="border-left-color: ${activeColor}">
+                            <span class="info-title">Wist je dat?</span>
+                            ${fruit.info}
                         </div>
                     </div>
                 `;
