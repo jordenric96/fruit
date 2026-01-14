@@ -3,16 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mijn Frambozen Dashboard</title>
+    <title>Mijn Fruit Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg-color: #1a2f23;
-            --card-bg: rgba(20, 20, 20, 0.6); /* Iets donkerder voor contrast met gloed */
+            --card-bg: rgba(20, 20, 20, 0.6);
             --accent-green: #4ade80;
-            --accent-pink: #ec4899; /* Iets feller roze */
+            --accent-pink: #ec4899;
             --accent-glow: rgba(236, 72, 153, 0.4);
             --accent-orange: #fb923c;
+            --accent-blue: #38bdf8;
             --text-color: #ffffff;
         }
 
@@ -23,15 +24,54 @@
             background: linear-gradient(135deg, #180a0e 0%, #112924 100%);
             color: var(--text-color);
             min-height: 100vh;
+            overflow-x: hidden; /* Voorkomt scrollbalk door confetti */
+        }
+
+        /* Confetti Canvas (Ligt bovenop alles, maar klikt erdoorheen) */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
         }
 
         h1 {
             text-align: center;
             font-size: 3rem;
-            margin-bottom: 50px;
+            margin-bottom: 30px;
             text-shadow: 0 0 25px var(--accent-pink);
             letter-spacing: 2px;
         }
+
+        /* ACTIE BALK (Feature 1) */
+        .action-bar {
+            background: rgba(56, 189, 248, 0.15);
+            border: 1px solid rgba(56, 189, 248, 0.4);
+            color: var(--accent-blue);
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+            padding: 20px 30px;
+            border-radius: 16px;
+            text-align: center;
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            box-shadow: 0 0 30px rgba(56, 189, 248, 0.15);
+            transition: transform 0.3s ease;
+        }
+        
+        .action-bar:hover {
+            transform: scale(1.02);
+            background: rgba(56, 189, 248, 0.2);
+        }
+
+        .action-icon { font-size: 2rem; }
+        .action-text { font-size: 1.1rem; font-weight: 600; line-height: 1.4; }
 
         .dashboard-grid {
             display: grid;
@@ -45,11 +85,8 @@
             background: var(--card-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            
-            /* DE NIEUWE STANDAARD ROZE GLOED */
             border: 1px solid rgba(236, 72, 153, 0.5);
             box-shadow: 0 0 20px var(--accent-glow), inset 0 0 20px rgba(236, 72, 153, 0.05);
-            
             border-radius: 24px;
             padding: 30px;
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -61,10 +98,10 @@
 
         .fruit-card:hover {
             transform: translateY(-10px) scale(1.02);
-            /* Feller effect bij hover */
             box-shadow: 0 0 40px rgba(236, 72, 153, 0.6), inset 0 0 30px rgba(236, 72, 153, 0.1);
             border-color: #ff8cc6;
             background: rgba(40, 40, 40, 0.7);
+            z-index: 10;
         }
 
         .header-section {
@@ -197,12 +234,8 @@
             border-left: 3px solid var(--accent-pink);
         }
 
-        .info-row {
-            margin-bottom: 8px;
-        }
-        .info-row:last-child {
-            margin-bottom: 0;
-        }
+        .info-row { margin-bottom: 8px; }
+        .info-row:last-child { margin-bottom: 0; }
 
         .highlight-label {
             font-weight: 700;
@@ -212,19 +245,26 @@
             margin-right: 5px;
         }
         
-        /* Specifieke kleur voor Smaak label */
-        .taste-label { color: #facc15; } /* Geel */
-        .tip-label { color: #4ade80; } /* Groen */
+        .taste-label { color: #facc15; }
+        .tip-label { color: #4ade80; }
 
         @media (max-width: 600px) {
             h1 { font-size: 2rem; }
             .dashboard-grid { grid-template-columns: 1fr; }
+            .action-bar { margin: 0 10px 40px 10px; flex-direction: column; gap: 10px; }
         }
     </style>
 </head>
 <body>
 
+    <canvas id="confetti-canvas"></canvas>
+
     <h1>🍇 Mijn Fruit Dashboard 🍇</h1>
+
+    <div class="action-bar" id="actionBar">
+        <div class="action-icon">📅</div>
+        <div class="action-text" id="actionText">Laden...</div>
+    </div>
 
     <div class="dashboard-grid" id="dashboard"></div>
 
@@ -306,6 +346,37 @@
             }
         ];
 
+        // --- 1. ACTIE BALK LOGICA ---
+        function updateActionBar() {
+            const now = new Date();
+            const month = now.getMonth(); // 0 = jan, 11 = dec
+            let msg = "";
+            let icon = "🌱";
+
+            if (month === 0 || month === 1) { // Jan-Feb
+                msg = "Wintertijd: Hét moment om de Fallgold en Autumn Passion tot de grond te snoeien! (En selectief bij de Twotimers)";
+                icon = "✂️";
+            } else if (month === 2) { // Maart
+                msg = "Maart: Tijd om te mesten! Geef ze wat organische voeding voor een goede start.";
+                icon = "💩";
+            } else if (month === 3 || month === 4) { // Apr-Mei
+                msg = "Lente: Houd de grond onkruidvrij en geef water bij droogte.";
+                icon = "💧";
+            } else if (month >= 5 && month <= 8) { // Jun-Sept
+                msg = "Oogstseizoen! Controleer dagelijks op rijp fruit en geniet ervan.";
+                icon = "🧺";
+            } else if (month === 9 || month === 10) { // Okt-Nov
+                msg = "Herfst: Na de laatste oogst kun je eventueel al wat snoeien of opbinden.";
+                icon = "🍂";
+            } else { // Dec
+                msg = "Rusttijd. Droom alvast van de volgende oogst.";
+                icon = "💤";
+            }
+
+            document.getElementById('actionText').innerText = msg;
+            document.querySelector('.action-icon').innerText = icon;
+        }
+
         function getNextHarvest(seasons) {
             const now = new Date();
             const currentYear = now.getFullYear();
@@ -353,11 +424,15 @@
             return "🦟"; 
         }
 
+        let hasActiveHarvest = false;
+
         function renderDashboard() {
             const container = document.getElementById('dashboard');
             container.innerHTML = ""; 
             const now = new Date();
+            hasActiveHarvest = false;
 
+            // Gewoon in volgorde van de array (1 t/m 6)
             fruitData.forEach(fruit => {
                 const harvestInfo = getNextHarvest(fruit.seasons);
                 let displayText = "";
@@ -370,6 +445,7 @@
                     subText = "Oogsttijd";
                     progress = 100;
                     isActive = true;
+                    hasActiveHarvest = true;
                 } else {
                     const diffTime = harvestInfo.date - now;
                     const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
@@ -423,8 +499,49 @@
                 `;
                 container.innerHTML += cardHTML;
             });
+
+            if(hasActiveHarvest) {
+                startConfetti();
+            }
         }
 
+        // --- 2. CONFETTI LOGICA ---
+        function startConfetti() {
+            const canvas = document.getElementById("confetti-canvas");
+            const ctx = canvas.getContext("2d");
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            // Maak 100 deeltjes aan
+            for(let i=0; i<100; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    speed: Math.random() * 3 + 1,
+                    color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+                    size: Math.random() * 6 + 2
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0,0, canvas.width, canvas.height);
+                particles.forEach(p => {
+                    ctx.fillStyle = p.color;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    p.y += p.speed;
+                    // Reset als ze beneden zijn
+                    if(p.y > canvas.height) p.y = -10;
+                });
+                requestAnimationFrame(draw);
+            }
+            draw();
+        }
+
+        // Start de functies
+        updateActionBar();
         renderDashboard();
     </script>
 </body>
