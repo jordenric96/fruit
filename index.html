@@ -8,10 +8,10 @@
     <style>
         :root {
             --bg-color: #1a2f23;
-            --card-bg: rgba(255, 255, 255, 0.08);
-            --card-border: rgba(255, 255, 255, 0.15);
+            --card-bg: rgba(20, 20, 20, 0.6); /* Iets donkerder voor contrast met gloed */
             --accent-green: #4ade80;
-            --accent-pink: #db2777; 
+            --accent-pink: #ec4899; /* Iets feller roze */
+            --accent-glow: rgba(236, 72, 153, 0.4);
             --accent-orange: #fb923c;
             --text-color: #ffffff;
         }
@@ -20,7 +20,7 @@
             margin: 0;
             padding: 40px;
             font-family: 'Fredoka', sans-serif;
-            background: linear-gradient(135deg, #271015 0%, #1e453e 100%);
+            background: linear-gradient(135deg, #180a0e 0%, #112924 100%);
             color: var(--text-color);
             min-height: 100vh;
         }
@@ -29,7 +29,7 @@
             text-align: center;
             font-size: 3rem;
             margin-bottom: 50px;
-            text-shadow: 0 0 20px rgba(219, 39, 119, 0.6);
+            text-shadow: 0 0 25px var(--accent-pink);
             letter-spacing: 2px;
         }
 
@@ -45,10 +45,13 @@
             background: var(--card-bg);
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--card-border);
+            
+            /* DE NIEUWE STANDAARD ROZE GLOED */
+            border: 1px solid rgba(236, 72, 153, 0.5);
+            box-shadow: 0 0 20px var(--accent-glow), inset 0 0 20px rgba(236, 72, 153, 0.05);
+            
             border-radius: 24px;
             padding: 30px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             display: flex;
             flex-direction: column;
@@ -58,9 +61,10 @@
 
         .fruit-card:hover {
             transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 50px 0 rgba(219, 39, 119, 0.2);
-            border-color: var(--accent-pink);
-            background: rgba(255, 255, 255, 0.12);
+            /* Feller effect bij hover */
+            box-shadow: 0 0 40px rgba(236, 72, 153, 0.6), inset 0 0 30px rgba(236, 72, 153, 0.1);
+            border-color: #ff8cc6;
+            background: rgba(40, 40, 40, 0.7);
         }
 
         .header-section {
@@ -73,6 +77,7 @@
         .fruit-name {
             font-size: 1.6rem;
             color: var(--accent-pink);
+            text-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
             margin: 0;
             line-height: 1.1;
             font-weight: 600;
@@ -80,14 +85,16 @@
 
         .latin-name {
             font-size: 0.85rem;
-            opacity: 0.6;
+            opacity: 0.7;
             font-style: italic;
             margin-top: 4px;
             display: block;
+            color: #ccc;
         }
 
         .fruit-number {
-            background: rgba(255,255,255,0.1);
+            background: rgba(236, 72, 153, 0.2);
+            border: 1px solid var(--accent-pink);
             width: 30px;
             height: 30px;
             border-radius: 50%;
@@ -96,7 +103,8 @@
             justify-content: center;
             font-size: 0.9rem;
             font-weight: bold;
-            color: rgba(255,255,255,0.5);
+            color: #fff;
+            box-shadow: 0 0 10px var(--accent-glow);
         }
 
         .badges {
@@ -139,7 +147,7 @@
             font-weight: 700;
             color: #fff;
             line-height: 1;
-            text-shadow: 0 5px 15px rgba(0,0,0,0.3);
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
         }
 
         .label {
@@ -150,13 +158,13 @@
             margin-top: 5px;
         }
 
-        /* Groei Balk */
         .growth-track {
             height: 14px;
-            background: rgba(0,0,0,0.3);
+            background: rgba(0,0,0,0.5);
             border-radius: 10px;
             position: relative;
             margin-bottom: 25px;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
         }
 
         .growth-vine {
@@ -165,9 +173,9 @@
             border-radius: 10px;
             width: 0%; 
             position: relative;
-            box-shadow: 0 0 15px rgba(219, 39, 119, 0.4);
+            box-shadow: 0 0 15px rgba(236, 72, 153, 0.6);
             transition: width 1.5s ease-out;
-            min-width: 5%; /* Zorgt dat er altijd een klein stukje zichtbaar is */
+            min-width: 5%;
         }
 
         .growth-icon {
@@ -180,23 +188,33 @@
         }
 
         .info-box {
-            background: rgba(0,0,0,0.2);
+            background: rgba(0,0,0,0.3);
             border-radius: 12px;
             padding: 15px;
             font-size: 0.9rem;
-            line-height: 1.5;
+            line-height: 1.6;
             color: rgba(255,255,255,0.9);
             border-left: 3px solid var(--accent-pink);
         }
 
-        .info-title {
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            opacity: 0.6;
-            margin-bottom: 4px;
-            display: block;
-            font-weight: 700;
+        .info-row {
+            margin-bottom: 8px;
         }
+        .info-row:last-child {
+            margin-bottom: 0;
+        }
+
+        .highlight-label {
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            opacity: 0.8;
+            margin-right: 5px;
+        }
+        
+        /* Specifieke kleur voor Smaak label */
+        .taste-label { color: #facc15; } /* Geel */
+        .tip-label { color: #4ade80; } /* Groen */
 
         @media (max-width: 600px) {
             h1 { font-size: 2rem; }
@@ -206,7 +224,7 @@
 </head>
 <body>
 
-    <h1>🍇 Mijn Frambozen Tuin 🍇</h1>
+    <h1>🍇 Mijn Fruit Dashboard 🍇</h1>
 
     <div class="dashboard-grid" id="dashboard"></div>
 
@@ -218,7 +236,8 @@
                 latin: "Rubus idaeus",
                 displaySeason: "Juni & September",
                 pruning: "2x p/j (Selectief)",
-                info: "Draagt 2x! Snoei in de winter alleen de toppen weg die in de herfst vrucht droegen. De rest draagt in de zomer.",
+                taste: "Klassiek framboos, zoet & stevig.",
+                info: "Snoei in de winter alleen de toppen weg die in de herfst vrucht droegen.",
                 seasons: [
                     { startMonth: 5, startDay: 15, endMonth: 6, endDay: 30 }, 
                     { startMonth: 7, startDay: 15, endMonth: 9, endDay: 15 }
@@ -230,7 +249,8 @@
                 latin: "Rubus Tayberry",
                 displaySeason: "Juni - Juli",
                 pruning: "Jaarlijks (Na oogst)",
-                info: "Snoei alle takken die vrucht hebben gedragen direct na de oogst tot op de grond weg. Bind nieuwe takken aan.",
+                taste: "Aromatisch, kruising braam/framboos, licht zuur.",
+                info: "Snoei alle takken die gedragen hebben direct na de oogst tot de grond.",
                 seasons: [
                     { startMonth: 5, startDay: 25, endMonth: 6, endDay: 20 }
                 ]
@@ -241,7 +261,8 @@
                 latin: "Rubus idaeus 'Fallgold'",
                 displaySeason: "Juli - September",
                 pruning: "Jaarlijks (Winter)",
-                info: "Herfstframboos. Makkelijkste methode: knip in de late winter alle takken af tot 10cm boven de grond.",
+                taste: "Goudgeel, honingachtig zoet & zacht.",
+                info: "Herfstframboos. Knip in de late winter alle takken af tot 10cm boven de grond.",
                 seasons: [
                     { startMonth: 6, startDay: 10, endMonth: 8, endDay: 20 }
                 ]
@@ -252,7 +273,8 @@
                 latin: "Rubus idaeus",
                 displaySeason: "Juni & Augustus",
                 pruning: "2x p/j (Selectief)",
-                info: "Dubbele oogst. Knip in zomer oude takken weg, in winter enkel de gedragen toppen van nieuwe takken.",
+                taste: "Zeer sappig, grote vrucht, uitstekende smaak.",
+                info: "Knip in zomer oude takken weg, in winter enkel de gedragen toppen.",
                 seasons: [
                     { startMonth: 5, startDay: 20, endMonth: 6, endDay: 25 },
                     { startMonth: 7, startDay: 15, endMonth: 8, endDay: 30 }
@@ -264,7 +286,8 @@
                 latin: "Rubus idaeus x occidentalis",
                 displaySeason: "Juli - Augustus",
                 pruning: "Jaarlijks (Winter)",
-                info: "Groeit krachtig. Kan als herfstframboos gesnoeid worden (alles weg in winter) voor één late, grote oogst.",
+                taste: "Exotisch, rokerig & zwarte bessen-aroma.",
+                info: "Groeit krachtig. Kan als herfstframboos gesnoeid worden (alles weg in winter).",
                 seasons: [
                     { startMonth: 6, startDay: 15, endMonth: 7, endDay: 30 }
                 ]
@@ -275,7 +298,8 @@
                 latin: "Ribes rubrum",
                 displaySeason: "Eind Juni",
                 pruning: "Jaarlijks (Winter)",
-                info: "Rode bes. Snoei in de winter (jan-mrt). Verwijder oud hout om de struik open en luchtig te houden.",
+                taste: "Friszuur, sappig (Rode aalbes).",
+                info: "Snoei in de winter (jan-mrt). Houd de struik luchtig.",
                 seasons: [
                     { startMonth: 5, startDay: 20, endMonth: 6, endDay: 15 }
                 ]
@@ -306,43 +330,32 @@
                     return { status: 'upcoming', date: p.start };
                 }
             }
-            // Fallback (zou theoretisch niet moeten gebeuren door 'next year' logic)
             return { status: 'upcoming', date: possibilities[0].start };
         }
 
         function calculateProgress(targetDate) {
             const now = new Date();
-            // AANPASSING: We kijken nu 300 dagen vooruit voor de visualisatie.
-            // Dit zorgt ervoor dat 150 dagen vs 180 dagen visueel verschilt.
             const maxWaitDays = 300; 
-            
             const diffTime = targetDate - now;
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             
             if (diffDays <= 0) return 100;
-
-            // Bereken percentage
             let percentage = 100 - ((diffDays / maxWaitDays) * 100);
-            
-            // Zorg dat het resultaat altijd tussen 5% en 100% blijft
-            // 5% zodat je altijd het begin van het steeltje ziet
             return Math.max(5, Math.min(100, percentage));
         }
 
         function getGrowthIcon(percentage, isActive) {
             if (isActive) return "🍇"; 
-            
-            // Iconen op basis van progressie in het jaar
-            if (percentage < 20) return "🌱"; // Slapend / Net wakker
-            if (percentage < 45) return "🌿"; // Groeit
-            if (percentage < 70) return "🌳"; // Vol in blad
-            if (percentage < 90) return "🌸"; // Bloesem
-            return "🦟"; // Bestuiving / Bijna fruit
+            if (percentage < 20) return "🌱"; 
+            if (percentage < 45) return "🌿"; 
+            if (percentage < 70) return "🌳"; 
+            if (percentage < 90) return "🌸"; 
+            return "🦟"; 
         }
 
         function renderDashboard() {
             const container = document.getElementById('dashboard');
-            container.innerHTML = ""; // Clear container bij re-render
+            container.innerHTML = ""; 
             const now = new Date();
 
             fruitData.forEach(fruit => {
@@ -366,7 +379,7 @@
                 }
 
                 const icon = getGrowthIcon(progress, isActive);
-                const activeColor = isActive ? '#db2777' : '#f472b6';
+                const activeColor = isActive ? '#db2777' : '#ec4899';
 
                 const cardHTML = `
                     <div class="fruit-card">
@@ -397,8 +410,14 @@
                         </div>
 
                         <div class="info-box" style="border-left-color: ${activeColor}">
-                            <span class="info-title">Snoei-tip & Info</span>
-                            ${fruit.info}
+                            <div class="info-row">
+                                <span class="highlight-label taste-label">🍬 Smaak:</span>
+                                ${fruit.taste}
+                            </div>
+                            <div class="info-row">
+                                <span class="highlight-label tip-label">🌱 Tip:</span>
+                                ${fruit.info}
+                            </div>
                         </div>
                     </div>
                 `;
