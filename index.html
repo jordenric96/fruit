@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mijn Fruit Dashboard</title>
+    <title>Lou en Noé's Vruchtentuin</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -14,6 +14,7 @@
             --accent-glow: rgba(236, 72, 153, 0.4);
             --accent-orange: #fb923c;
             --accent-blue: #38bdf8;
+            --accent-red: #ef4444; /* Nieuw voor aardbei accent */
             --text-color: #ffffff;
         }
 
@@ -24,10 +25,9 @@
             background: linear-gradient(135deg, #180a0e 0%, #112924 100%);
             color: var(--text-color);
             min-height: 100vh;
-            overflow-x: hidden; /* Voorkomt scrollbalk door confetti */
+            overflow-x: hidden;
         }
 
-        /* Confetti Canvas (Ligt bovenop alles, maar klikt erdoorheen) */
         #confetti-canvas {
             position: fixed;
             top: 0;
@@ -40,13 +40,14 @@
 
         h1 {
             text-align: center;
-            font-size: 3rem;
+            font-size: 2.8rem;
             margin-bottom: 30px;
             text-shadow: 0 0 25px var(--accent-pink);
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+            line-height: 1.3;
         }
 
-        /* ACTIE BALK (Feature 1) */
+        /* ACTIE BALK */
         .action-bar {
             background: rgba(56, 189, 248, 0.15);
             border: 1px solid rgba(56, 189, 248, 0.4);
@@ -206,6 +207,7 @@
 
         .growth-vine {
             height: 100%;
+            /* Default gradient, overwritten inline for strawberries */
             background: linear-gradient(90deg, var(--accent-green), var(--accent-pink));
             border-radius: 10px;
             width: 0%; 
@@ -249,7 +251,7 @@
         .tip-label { color: #4ade80; }
 
         @media (max-width: 600px) {
-            h1 { font-size: 2rem; }
+            h1 { font-size: 1.8rem; }
             .dashboard-grid { grid-template-columns: 1fr; }
             .action-bar { margin: 0 10px 40px 10px; flex-direction: column; gap: 10px; }
         }
@@ -259,7 +261,7 @@
 
     <canvas id="confetti-canvas"></canvas>
 
-    <h1>🍇 Mijn Fruit Dashboard 🍇</h1>
+    <h1>🍓🍒 Lou en Noé hun rode vruchten tuin 🍇🍓</h1>
 
     <div class="action-bar" id="actionBar">
         <div class="action-icon">📅</div>
@@ -269,6 +271,7 @@
     <div class="dashboard-grid" id="dashboard"></div>
 
     <script>
+        // DATA: Nu met 'iconType' om het juiste symbool te kiezen
         const fruitData = [
             {
                 id: 1,
@@ -278,10 +281,8 @@
                 pruning: "2x p/j (Selectief)",
                 taste: "Klassiek framboos, zoet & stevig.",
                 info: "Snoei in de winter alleen de toppen weg die in de herfst vrucht droegen.",
-                seasons: [
-                    { startMonth: 5, startDay: 15, endMonth: 6, endDay: 30 }, 
-                    { startMonth: 7, startDay: 15, endMonth: 9, endDay: 15 }
-                ]
+                iconType: 'raspberry', // Framboos
+                seasons: [{ startMonth: 5, startDay: 15, endMonth: 6, endDay: 30 }, { startMonth: 7, startDay: 15, endMonth: 9, endDay: 15 }]
             },
             {
                 id: 2,
@@ -291,9 +292,8 @@
                 pruning: "Jaarlijks (Na oogst)",
                 taste: "Aromatisch, kruising braam/framboos, licht zuur.",
                 info: "Snoei alle takken die gedragen hebben direct na de oogst tot de grond.",
-                seasons: [
-                    { startMonth: 5, startDay: 25, endMonth: 6, endDay: 20 }
-                ]
+                iconType: 'raspberry',
+                seasons: [{ startMonth: 5, startDay: 25, endMonth: 6, endDay: 20 }]
             },
             {
                 id: 3,
@@ -303,9 +303,8 @@
                 pruning: "Jaarlijks (Winter)",
                 taste: "Goudgeel, honingachtig zoet & zacht.",
                 info: "Herfstframboos. Knip in de late winter alle takken af tot 10cm boven de grond.",
-                seasons: [
-                    { startMonth: 6, startDay: 10, endMonth: 8, endDay: 20 }
-                ]
+                iconType: 'raspberry',
+                seasons: [{ startMonth: 6, startDay: 10, endMonth: 8, endDay: 20 }]
             },
             {
                 id: 4,
@@ -315,10 +314,8 @@
                 pruning: "2x p/j (Selectief)",
                 taste: "Zeer sappig, grote vrucht, uitstekende smaak.",
                 info: "Knip in zomer oude takken weg, in winter enkel de gedragen toppen.",
-                seasons: [
-                    { startMonth: 5, startDay: 20, endMonth: 6, endDay: 25 },
-                    { startMonth: 7, startDay: 15, endMonth: 8, endDay: 30 }
-                ]
+                iconType: 'raspberry',
+                seasons: [{ startMonth: 5, startDay: 20, endMonth: 6, endDay: 25 }, { startMonth: 7, startDay: 15, endMonth: 8, endDay: 30 }]
             },
             {
                 id: 5,
@@ -328,9 +325,8 @@
                 pruning: "Jaarlijks (Winter)",
                 taste: "Exotisch, rokerig & zwarte bessen-aroma.",
                 info: "Groeit krachtig. Kan als herfstframboos gesnoeid worden (alles weg in winter).",
-                seasons: [
-                    { startMonth: 6, startDay: 15, endMonth: 7, endDay: 30 }
-                ]
+                iconType: 'raspberry',
+                seasons: [{ startMonth: 6, startDay: 15, endMonth: 7, endDay: 30 }]
             },
             {
                 id: 6,
@@ -340,36 +336,50 @@
                 pruning: "Jaarlijks (Winter)",
                 taste: "Friszuur, sappig (Rode aalbes).",
                 info: "Snoei in de winter (jan-mrt). Houd de struik luchtig.",
+                iconType: 'redcurrant', // Rode bes
+                seasons: [{ startMonth: 5, startDay: 20, endMonth: 6, endDay: 15 }]
+            },
+            // NIEUW KAARTJE: Charlotte Aardbei
+            {
+                id: 7,
+                name: "Charlotte Aardbei",
+                latin: "Fragaria ananassa",
+                displaySeason: "Juni - Oktober", // Doordragend
+                pruning: "Jaarlijks (Na winter)",
+                taste: "Zoet, aromatisch, bosaardbei-achtig.",
+                info: "Doordragende aardbei. Verwijder eerste bloemen voor sterkere plant. Knip uitlopers weg.",
+                iconType: 'strawberry', // Aardbei
                 seasons: [
-                    { startMonth: 5, startDay: 20, endMonth: 6, endDay: 15 }
+                    // Ruim seizoen voor doordragers
+                    { startMonth: 5, startDay: 15, endMonth: 9, endDay: 15 }
                 ]
             }
         ];
 
-        // --- 1. ACTIE BALK LOGICA ---
+        // --- ACTIE BALK LOGICA ---
         function updateActionBar() {
             const now = new Date();
-            const month = now.getMonth(); // 0 = jan, 11 = dec
+            const month = now.getMonth(); 
             let msg = "";
             let icon = "🌱";
 
             if (month === 0 || month === 1) { // Jan-Feb
-                msg = "Wintertijd: Hét moment om de Fallgold en Autumn Passion tot de grond te snoeien! (En selectief bij de Twotimers)";
+                msg = "Wintertijd: Hét moment om de herfstframbozen en aalbessen te snoeien. Verwijder ook oud blad bij de aardbeien.";
                 icon = "✂️";
             } else if (month === 2) { // Maart
-                msg = "Maart: Tijd om te mesten! Geef ze wat organische voeding voor een goede start.";
+                msg = "Maart: Tijd om te mesten! Geef alle rode vruchten wat organische voeding.";
                 icon = "💩";
             } else if (month === 3 || month === 4) { // Apr-Mei
-                msg = "Lente: Houd de grond onkruidvrij en geef water bij droogte.";
-                icon = "💧";
+                msg = "Lente: Houd de grond onkruidvrij. Leg stro onder de aardbeien zodra er vruchtjes komen.";
+                icon = "🍓";
             } else if (month >= 5 && month <= 8) { // Jun-Sept
-                msg = "Oogstseizoen! Controleer dagelijks op rijp fruit en geniet ervan.";
+                msg = "Oogstseizoen! Controleer dagelijks op rijp fruit. Pluk de Charlotte aardbeien regelmatig door.";
                 icon = "🧺";
             } else if (month === 9 || month === 10) { // Okt-Nov
                 msg = "Herfst: Na de laatste oogst kun je eventueel al wat snoeien of opbinden.";
                 icon = "🍂";
             } else { // Dec
-                msg = "Rusttijd. Droom alvast van de volgende oogst.";
+                msg = "Rusttijd in de tuin van Lou en Noé.";
                 icon = "💤";
             }
 
@@ -415,13 +425,21 @@
             return Math.max(5, Math.min(100, percentage));
         }
 
-        function getGrowthIcon(percentage, isActive) {
-            if (isActive) return "🍇"; 
+        // NIEUWE FUNCTIE: Kiest het juiste icoon op basis van type en progressie
+        function getGrowthIcon(percentage, isActive, iconType) {
+            // Bepaal het eind-icoon op basis van het type
+            let finalIcon = "🍇"; // Default framboos
+            if (iconType === 'strawberry') finalIcon = "🍓";
+            if (iconType === 'redcurrant') finalIcon = "🍒"; // Kersjes als symbool voor kleine rode besjes
+
+            if (isActive) return finalIcon;
+            
+            // Groeifases
             if (percentage < 20) return "🌱"; 
             if (percentage < 45) return "🌿"; 
             if (percentage < 70) return "🌳"; 
             if (percentage < 90) return "🌸"; 
-            return "🦟"; 
+            return finalIcon; // Toon het fruit net voor de oogst
         }
 
         let hasActiveHarvest = false;
@@ -432,7 +450,6 @@
             const now = new Date();
             hasActiveHarvest = false;
 
-            // Gewoon in volgorde van de array (1 t/m 6)
             fruitData.forEach(fruit => {
                 const harvestInfo = getNextHarvest(fruit.seasons);
                 let displayText = "";
@@ -454,18 +471,23 @@
                     progress = calculateProgress(harvestInfo.date);
                 }
 
-                const icon = getGrowthIcon(progress, isActive);
-                const activeColor = isActive ? '#db2777' : '#ec4899';
+                // Geef het iconType mee aan de functie
+                const icon = getGrowthIcon(progress, isActive, fruit.iconType);
+                
+                // Kleuren bepalen: Aardbei krijgt rood accent, rest roze
+                const isStrawberry = fruit.iconType === 'strawberry';
+                const activeColor = isActive ? (isStrawberry ? '#ef4444' : '#db2777') : (isStrawberry ? '#f87171' : '#ec4899');
+                const gradientEnd = isStrawberry ? '#ef4444' : 'var(--accent-pink)';
 
                 const cardHTML = `
-                    <div class="fruit-card">
+                    <div class="fruit-card" style="${isStrawberry ? 'border-color: rgba(239, 68, 68, 0.5); box-shadow: 0 0 20px rgba(239, 68, 68, 0.4), inset 0 0 20px rgba(239, 68, 68, 0.05);' : ''}">
                         <div>
                             <div class="header-section">
                                 <div>
-                                    <h2 class="fruit-name">${fruit.name}</h2>
+                                    <h2 class="fruit-name" style="${isStrawberry ? 'color: #f87171; text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);' : ''}">${fruit.name}</h2>
                                     <span class="latin-name">${fruit.latin}</span>
                                 </div>
-                                <div class="fruit-number">${fruit.id}</div>
+                                <div class="fruit-number" style="${isStrawberry ? 'background: rgba(239, 68, 68, 0.2); border-color: #ef4444;' : ''}">${fruit.id}</div>
                             </div>
                             
                             <div class="badges">
@@ -479,7 +501,7 @@
                             </div>
 
                             <div class="growth-track">
-                                <div class="growth-vine" style="width: ${progress}%; background: linear-gradient(90deg, #4ade80, ${activeColor})">
+                                <div class="growth-vine" style="width: ${progress}%; background: linear-gradient(90deg, #4ade80, ${gradientEnd})">
                                     <div class="growth-icon" style="transform: scale(${1 + (progress/100)})">${icon}</div>
                                 </div>
                             </div>
@@ -505,7 +527,6 @@
             }
         }
 
-        // --- 2. CONFETTI LOGICA ---
         function startConfetti() {
             const canvas = document.getElementById("confetti-canvas");
             const ctx = canvas.getContext("2d");
@@ -513,13 +534,12 @@
             canvas.height = window.innerHeight;
 
             const particles = [];
-            // Maak 100 deeltjes aan
             for(let i=0; i<100; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height - canvas.height,
                     speed: Math.random() * 3 + 1,
-                    color: `hsl(${Math.random() * 360}, 100%, 50%)`,
+                    color: `hsl(${Math.random() * 50 + 330}, 100%, 50%)`, // Meer rode/roze tinten confetti
                     size: Math.random() * 6 + 2
                 });
             }
@@ -532,7 +552,6 @@
                     ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
                     ctx.fill();
                     p.y += p.speed;
-                    // Reset als ze beneden zijn
                     if(p.y > canvas.height) p.y = -10;
                 });
                 requestAnimationFrame(draw);
@@ -540,7 +559,6 @@
             draw();
         }
 
-        // Start de functies
         updateActionBar();
         renderDashboard();
     </script>
