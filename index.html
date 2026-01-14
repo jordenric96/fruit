@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mijn Fruit Dashboard 2.0</title>
+    <title>Mijn Frambozen Dashboard</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -11,8 +11,8 @@
             --card-bg: rgba(255, 255, 255, 0.08);
             --card-border: rgba(255, 255, 255, 0.15);
             --accent-green: #4ade80;
-            --accent-pink: #f472b6;
-            --accent-yellow: #facc15;
+            --accent-pink: #db2777; /* Iets donkerder roze voor framboos */
+            --accent-orange: #fb923c;
             --text-color: #ffffff;
         }
 
@@ -20,7 +20,7 @@
             margin: 0;
             padding: 40px;
             font-family: 'Fredoka', sans-serif;
-            background: linear-gradient(135deg, #0f1c15 0%, #1e453e 100%);
+            background: linear-gradient(135deg, #271015 0%, #1e453e 100%); /* Iets rodere gloed in achtergrond */
             color: var(--text-color);
             min-height: 100vh;
         }
@@ -29,7 +29,7 @@
             text-align: center;
             font-size: 3rem;
             margin-bottom: 50px;
-            text-shadow: 0 0 20px rgba(74, 222, 128, 0.5);
+            text-shadow: 0 0 20px rgba(219, 39, 119, 0.6);
             letter-spacing: 2px;
         }
 
@@ -58,8 +58,8 @@
 
         .fruit-card:hover {
             transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 20px 50px 0 rgba(74, 222, 128, 0.15);
-            border-color: var(--accent-green);
+            box-shadow: 0 20px 50px 0 rgba(219, 39, 119, 0.2);
+            border-color: var(--accent-pink);
             background: rgba(255, 255, 255, 0.12);
         }
 
@@ -72,7 +72,7 @@
 
         .fruit-name {
             font-size: 1.6rem;
-            color: var(--accent-green);
+            color: var(--accent-pink);
             margin: 0;
             line-height: 1.1;
             font-weight: 600;
@@ -99,17 +99,35 @@
             color: rgba(255,255,255,0.5);
         }
 
-        /* Nieuw: Seizoen Badge */
+        /* Badges Container */
+        .badges {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
         .season-badge {
             background: rgba(74, 222, 128, 0.15);
             color: var(--accent-green);
-            padding: 6px 12px;
-            border-radius: 12px;
-            font-size: 0.85rem;
-            display: inline-block;
-            margin-bottom: 20px;
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
             border: 1px solid rgba(74, 222, 128, 0.3);
             font-weight: 500;
+        }
+
+        .pruning-badge {
+            background: rgba(251, 146, 60, 0.15);
+            color: var(--accent-orange);
+            padding: 5px 10px;
+            border-radius: 8px;
+            font-size: 0.8rem;
+            border: 1px solid rgba(251, 146, 60, 0.3);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .countdown-container {
@@ -148,7 +166,7 @@
             border-radius: 10px;
             width: 0%; 
             position: relative;
-            box-shadow: 0 0 15px rgba(74, 222, 128, 0.4);
+            box-shadow: 0 0 15px rgba(219, 39, 119, 0.4);
             transition: width 1.5s ease-out;
         }
 
@@ -161,7 +179,7 @@
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        /* Nieuw: Extra Info Sectie */
+        /* Info Sectie */
         .info-box {
             background: rgba(0,0,0,0.2);
             border-radius: 12px;
@@ -189,20 +207,20 @@
 </head>
 <body>
 
-    <h1>🌿 Garden Tracker 🍓</h1>
+    <h1>🍇 Mijn Frambozen Tuin 🍇</h1>
 
     <div class="dashboard-grid" id="dashboard">
         </div>
 
     <script>
-        // DATA OBJECT: Nu met 'displaySeason' en 'info'
         const fruitData = [
             {
                 id: 1,
                 name: "Sugana Red Twotimer",
                 latin: "Rubus idaeus",
-                displaySeason: "Juni - Juli & Aug - Okt",
-                info: "De enige framboos die écht twee keer op dezelfde tak draagt. Grote, helderrode vruchten.",
+                displaySeason: "Juni & September",
+                pruning: "2x p/j (Selectief)",
+                info: "Draagt 2x! Snoei in de winter alleen de toppen weg die in de herfst vrucht droegen. De rest draagt in de zomer.",
                 seasons: [
                     { startMonth: 5, startDay: 15, endMonth: 6, endDay: 30 }, 
                     { startMonth: 7, startDay: 15, endMonth: 9, endDay: 15 }
@@ -213,7 +231,8 @@
                 name: "Tayberry",
                 latin: "Rubus Tayberry",
                 displaySeason: "Juni - Juli",
-                info: "Kruising tussen braam en framboos. Grote vruchten, aromatisch en iets zuurder.",
+                pruning: "Jaarlijks (Na oogst)",
+                info: "Snoei alle takken die vrucht hebben gedragen direct na de oogst tot op de grond weg. Bind nieuwe takken aan.",
                 seasons: [
                     { startMonth: 5, startDay: 25, endMonth: 6, endDay: 20 }
                 ]
@@ -223,7 +242,8 @@
                 name: "Fallgold",
                 latin: "Rubus idaeus 'Fallgold'",
                 displaySeason: "Juli - September",
-                info: "Gele goudkleurige framboos. Vaak zoeter en zachter dan de rode varianten.",
+                pruning: "Jaarlijks (Winter)",
+                info: "Herfstframboos. Makkelijkste methode: knip in de late winter alle takken af tot 10cm boven de grond.",
                 seasons: [
                     { startMonth: 6, startDay: 10, endMonth: 8, endDay: 20 }
                 ]
@@ -232,8 +252,9 @@
                 id: 4,
                 name: "Twotimer Solu Red",
                 latin: "Rubus idaeus",
-                displaySeason: "Juni & Augustus - Sept",
-                info: "Compacte groeier met stevige vruchten. Ideaal voor een dubbele oogst.",
+                displaySeason: "Juni & Augustus",
+                pruning: "2x p/j (Selectief)",
+                info: "Dubbele oogst. Knip in zomer oude takken weg, in winter enkel de gedragen toppen van nieuwe takken.",
                 seasons: [
                     { startMonth: 5, startDay: 20, endMonth: 6, endDay: 25 },
                     { startMonth: 7, startDay: 15, endMonth: 8, endDay: 30 }
@@ -244,7 +265,8 @@
                 name: "Autumn Passion",
                 latin: "Rubus idaeus x occidentalis",
                 displaySeason: "Juli - Augustus",
-                info: "Paarse vrucht met een exotische smaak (kruising zwarte framboos).",
+                pruning: "Jaarlijks (Winter)",
+                info: "Groeit krachtig. Kan als herfstframboos gesnoeid worden (alles weg in winter) voor één late, grote oogst.",
                 seasons: [
                     { startMonth: 6, startDay: 15, endMonth: 7, endDay: 30 }
                 ]
@@ -253,8 +275,9 @@
                 id: 6,
                 name: "Jonkheer van Tets",
                 latin: "Ribes rubrum",
-                displaySeason: "Eind Juni - Juli",
-                info: "De klassieke rode aalbes. Vroeg rijp, hoge opbrengst en friszuur van smaak.",
+                displaySeason: "Eind Juni",
+                pruning: "Jaarlijks (Winter)",
+                info: "Rode bes. Snoei in de winter (jan-mrt). Verwijder oud hout om de struik open en luchtig te houden.",
                 seasons: [
                     { startMonth: 5, startDay: 20, endMonth: 6, endDay: 15 }
                 ]
@@ -270,7 +293,6 @@
                 let start = new Date(currentYear, season.startMonth, season.startDay);
                 let end = new Date(currentYear, season.endMonth, season.endDay);
                 possibilities.push({ start, end });
-                // Check volgend jaar ook
                 let startNext = new Date(currentYear + 1, season.startMonth, season.startDay);
                 let endNext = new Date(currentYear + 1, season.endMonth, season.endDay);
                 possibilities.push({ start: startNext, end: endNext });
@@ -291,7 +313,7 @@
 
         function calculateProgress(targetDate) {
             const now = new Date();
-            const maxWaitDays = 120; // Dagen voordat de balk begint te lopen
+            const maxWaitDays = 120;
             const diffTime = targetDate - now;
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             
@@ -301,12 +323,12 @@
         }
 
         function getGrowthIcon(percentage, isActive) {
-            if (isActive) return "🍓"; 
+            if (isActive) return "🍇"; // Framboos/Braam look
             if (percentage < 15) return "🌱"; 
             if (percentage < 40) return "🌿"; 
             if (percentage < 70) return "🌳"; 
             if (percentage < 90) return "🌸"; 
-            return "🍇"; 
+            return "🦟"; // Bestuiving/Bijna klaar
         }
 
         function renderDashboard() {
@@ -334,8 +356,7 @@
                 }
 
                 const icon = getGrowthIcon(progress, isActive);
-                // Twotimer specifieke kleur voor info box (roze accent) vs standaard
-                const activeColor = isActive ? '#ef4444' : '#f472b6';
+                const activeColor = isActive ? '#db2777' : '#f472b6'; // Meer roze/rood accent
 
                 const cardHTML = `
                     <div class="fruit-card">
@@ -348,7 +369,10 @@
                                 <div class="fruit-number">${fruit.id}</div>
                             </div>
                             
-                            <div class="season-badge">📅 ${fruit.displaySeason}</div>
+                            <div class="badges">
+                                <div class="season-badge">📅 ${fruit.displaySeason}</div>
+                                <div class="pruning-badge">✂️ ${fruit.pruning}</div>
+                            </div>
 
                             <div class="countdown-container">
                                 <div class="days-left">${displayText}</div>
@@ -363,7 +387,7 @@
                         </div>
 
                         <div class="info-box" style="border-left-color: ${activeColor}">
-                            <span class="info-title">Wist je dat?</span>
+                            <span class="info-title">Snoei-tip & Info</span>
                             ${fruit.info}
                         </div>
                     </div>
