@@ -11,7 +11,7 @@
             --card-bg: rgba(255, 255, 255, 0.08);
             --card-border: rgba(255, 255, 255, 0.15);
             --accent-green: #4ade80;
-            --accent-pink: #db2777; /* Iets donkerder roze voor framboos */
+            --accent-pink: #db2777; 
             --accent-orange: #fb923c;
             --text-color: #ffffff;
         }
@@ -20,7 +20,7 @@
             margin: 0;
             padding: 40px;
             font-family: 'Fredoka', sans-serif;
-            background: linear-gradient(135deg, #271015 0%, #1e453e 100%); /* Iets rodere gloed in achtergrond */
+            background: linear-gradient(135deg, #271015 0%, #1e453e 100%);
             color: var(--text-color);
             min-height: 100vh;
         }
@@ -99,7 +99,6 @@
             color: rgba(255,255,255,0.5);
         }
 
-        /* Badges Container */
         .badges {
             display: flex;
             gap: 10px;
@@ -168,6 +167,7 @@
             position: relative;
             box-shadow: 0 0 15px rgba(219, 39, 119, 0.4);
             transition: width 1.5s ease-out;
+            min-width: 5%; /* Zorgt dat er altijd een klein stukje zichtbaar is */
         }
 
         .growth-icon {
@@ -179,7 +179,6 @@
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
         }
 
-        /* Info Sectie */
         .info-box {
             background: rgba(0,0,0,0.2);
             border-radius: 12px;
@@ -209,8 +208,7 @@
 
     <h1>🍇 Mijn Frambozen Tuin 🍇</h1>
 
-    <div class="dashboard-grid" id="dashboard">
-        </div>
+    <div class="dashboard-grid" id="dashboard"></div>
 
     <script>
         const fruitData = [
@@ -308,31 +306,43 @@
                     return { status: 'upcoming', date: p.start };
                 }
             }
-            return null;
+            // Fallback (zou theoretisch niet moeten gebeuren door 'next year' logic)
+            return { status: 'upcoming', date: possibilities[0].start };
         }
 
         function calculateProgress(targetDate) {
             const now = new Date();
-            const maxWaitDays = 120;
+            // AANPASSING: We kijken nu 300 dagen vooruit voor de visualisatie.
+            // Dit zorgt ervoor dat 150 dagen vs 180 dagen visueel verschilt.
+            const maxWaitDays = 300; 
+            
             const diffTime = targetDate - now;
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             
             if (diffDays <= 0) return 100;
+
+            // Bereken percentage
             let percentage = 100 - ((diffDays / maxWaitDays) * 100);
-            return Math.max(0, Math.min(100, percentage));
+            
+            // Zorg dat het resultaat altijd tussen 5% en 100% blijft
+            // 5% zodat je altijd het begin van het steeltje ziet
+            return Math.max(5, Math.min(100, percentage));
         }
 
         function getGrowthIcon(percentage, isActive) {
-            if (isActive) return "🍇"; // Framboos/Braam look
-            if (percentage < 15) return "🌱"; 
-            if (percentage < 40) return "🌿"; 
-            if (percentage < 70) return "🌳"; 
-            if (percentage < 90) return "🌸"; 
-            return "🦟"; // Bestuiving/Bijna klaar
+            if (isActive) return "🍇"; 
+            
+            // Iconen op basis van progressie in het jaar
+            if (percentage < 20) return "🌱"; // Slapend / Net wakker
+            if (percentage < 45) return "🌿"; // Groeit
+            if (percentage < 70) return "🌳"; // Vol in blad
+            if (percentage < 90) return "🌸"; // Bloesem
+            return "🦟"; // Bestuiving / Bijna fruit
         }
 
         function renderDashboard() {
             const container = document.getElementById('dashboard');
+            container.innerHTML = ""; // Clear container bij re-render
             const now = new Date();
 
             fruitData.forEach(fruit => {
@@ -356,7 +366,7 @@
                 }
 
                 const icon = getGrowthIcon(progress, isActive);
-                const activeColor = isActive ? '#db2777' : '#f472b6'; // Meer roze/rood accent
+                const activeColor = isActive ? '#db2777' : '#f472b6';
 
                 const cardHTML = `
                     <div class="fruit-card">
