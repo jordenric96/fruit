@@ -11,10 +11,9 @@
             --card-bg: rgba(20, 20, 20, 0.6);
             --accent-green: #4ade80;
             --accent-pink: #ec4899;
-            --accent-glow: rgba(236, 72, 153, 0.4);
-            --accent-orange: #fb923c;
-            --accent-blue: #38bdf8;
-            --accent-red: #ef4444; /* Nieuw voor aardbei accent */
+            --accent-red: #ef4444;
+            --accent-orange: #f97316; /* Snoeikleur */
+            --accent-wood: #a16207;
             --text-color: #ffffff;
         }
 
@@ -40,7 +39,7 @@
 
         h1 {
             text-align: center;
-            font-size: 2.8rem;
+            font-size: 2.5rem;
             margin-bottom: 30px;
             text-shadow: 0 0 25px var(--accent-pink);
             letter-spacing: 1px;
@@ -51,32 +50,26 @@
         .action-bar {
             background: rgba(56, 189, 248, 0.15);
             border: 1px solid rgba(56, 189, 248, 0.4);
-            color: var(--accent-blue);
+            color: #38bdf8;
             max-width: 800px;
             margin: 0 auto 50px auto;
-            padding: 20px 30px;
+            padding: 15px 25px;
             border-radius: 16px;
             text-align: center;
             backdrop-filter: blur(8px);
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 15px;
             box-shadow: 0 0 30px rgba(56, 189, 248, 0.15);
-            transition: transform 0.3s ease;
         }
         
-        .action-bar:hover {
-            transform: scale(1.02);
-            background: rgba(56, 189, 248, 0.2);
-        }
-
-        .action-icon { font-size: 2rem; }
-        .action-text { font-size: 1.1rem; font-weight: 600; line-height: 1.4; }
+        .action-icon { font-size: 1.8rem; }
+        .action-text { font-size: 1rem; font-weight: 600; }
 
         .dashboard-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
             gap: 35px;
             max-width: 1400px;
             margin: 0 auto;
@@ -87,21 +80,17 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             border: 1px solid rgba(236, 72, 153, 0.5);
-            box-shadow: 0 0 20px var(--accent-glow), inset 0 0 20px rgba(236, 72, 153, 0.05);
+            box-shadow: 0 0 20px rgba(236, 72, 153, 0.2);
             border-radius: 24px;
-            padding: 30px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            padding: 25px;
+            transition: all 0.4s ease;
             position: relative;
         }
 
         .fruit-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 0 40px rgba(236, 72, 153, 0.6), inset 0 0 30px rgba(236, 72, 153, 0.1);
-            border-color: #ff8cc6;
-            background: rgba(40, 40, 40, 0.7);
+            transform: translateY(-5px);
+            box-shadow: 0 0 40px rgba(236, 72, 153, 0.4);
+            background: rgba(40, 40, 40, 0.8);
             z-index: 10;
         }
 
@@ -109,11 +98,11 @@
             display: flex;
             justify-content: space-between;
             align-items: flex-start;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
         }
 
         .fruit-name {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             color: var(--accent-pink);
             text-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
             margin: 0;
@@ -122,7 +111,7 @@
         }
 
         .latin-name {
-            font-size: 0.85rem;
+            font-size: 0.8rem;
             opacity: 0.7;
             font-style: italic;
             margin-top: 4px;
@@ -133,127 +122,89 @@
         .fruit-number {
             background: rgba(236, 72, 153, 0.2);
             border: 1px solid var(--accent-pink);
-            width: 30px;
-            height: 30px;
+            width: 28px;
+            height: 28px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             font-weight: bold;
             color: #fff;
-            box-shadow: 0 0 10px var(--accent-glow);
         }
 
-        .badges {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
+        /* TRACK STYLES */
+        .track-container {
+            margin-bottom: 25px;
         }
-
-        .season-badge {
-            background: rgba(74, 222, 128, 0.15);
-            color: var(--accent-green);
-            padding: 5px 10px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            border: 1px solid rgba(74, 222, 128, 0.3);
-            font-weight: 500;
-        }
-
-        .pruning-badge {
-            background: rgba(251, 146, 60, 0.15);
-            color: var(--accent-orange);
-            padding: 5px 10px;
-            border-radius: 8px;
-            font-size: 0.8rem;
-            border: 1px solid rgba(251, 146, 60, 0.3);
-            font-weight: 500;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .countdown-container {
-            text-align: center;
-            margin: 10px 0 25px 0;
-        }
-
-        .days-left {
-            font-size: 3.5rem;
-            font-weight: 700;
-            color: #fff;
-            line-height: 1;
-            text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-        }
-
-        .label {
-            font-size: 0.9rem;
+        
+        .track-label {
+            font-size: 0.85rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
-            opacity: 0.7;
-            margin-top: 5px;
+            font-weight: 700;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: space-between;
+            color: rgba(255,255,255,0.8);
         }
 
-        .growth-track {
-            height: 14px;
+        .track-bg {
+            height: 12px;
             background: rgba(0,0,0,0.5);
             border-radius: 10px;
             position: relative;
-            margin-bottom: 25px;
             box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
         }
 
-        .growth-vine {
+        .track-fill {
             height: 100%;
-            /* Default gradient, overwritten inline for strawberries */
-            background: linear-gradient(90deg, var(--accent-green), var(--accent-pink));
             border-radius: 10px;
             width: 0%; 
             position: relative;
-            box-shadow: 0 0 15px rgba(236, 72, 153, 0.6);
             transition: width 1.5s ease-out;
             min-width: 5%;
         }
 
-        .growth-icon {
+        .track-icon {
             position: absolute;
-            right: -12px;
-            top: -16px;
-            font-size: 1.8rem;
-            filter: drop-shadow(0 4px 4px rgba(0,0,0,0.4));
+            right: -10px;
+            top: -14px;
+            font-size: 1.5rem;
+            filter: drop-shadow(0 2px 3px rgba(0,0,0,0.5));
             transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        /* Oogst Balk Specifiek */
+        .harvest-fill {
+            background: linear-gradient(90deg, var(--accent-green), var(--accent-pink));
+            box-shadow: 0 0 10px rgba(236, 72, 153, 0.5);
+        }
+
+        /* Snoei Balk Specifiek */
+        .pruning-fill {
+            background: linear-gradient(90deg, #a16207, var(--accent-orange));
+            box-shadow: 0 0 10px rgba(251, 146, 60, 0.5);
         }
 
         .info-box {
             background: rgba(0,0,0,0.3);
             border-radius: 12px;
             padding: 15px;
-            font-size: 0.9rem;
-            line-height: 1.6;
-            color: rgba(255,255,255,0.9);
-            border-left: 3px solid var(--accent-pink);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: rgba(255,255,255,0.8);
+            border-top: 1px solid rgba(255,255,255,0.1);
         }
-
-        .info-row { margin-bottom: 8px; }
-        .info-row:last-child { margin-bottom: 0; }
 
         .highlight-label {
+            color: #facc15;
             font-weight: 700;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            opacity: 0.8;
-            margin-right: 5px;
         }
-        
-        .taste-label { color: #facc15; }
-        .tip-label { color: #4ade80; }
 
         @media (max-width: 600px) {
             h1 { font-size: 1.8rem; }
             .dashboard-grid { grid-template-columns: 1fr; }
-            .action-bar { margin: 0 10px 40px 10px; flex-direction: column; gap: 10px; }
+            .action-bar { flex-direction: column; }
         }
     </style>
 </head>
@@ -271,123 +222,89 @@
     <div class="dashboard-grid" id="dashboard"></div>
 
     <script>
-        // DATA: Nu met 'iconType' om het juiste symbool te kiezen
+        // DATA: Nu met 'pruningSeasons'
         const fruitData = [
             {
                 id: 1,
                 name: "Sugana Red Twotimer",
                 latin: "Rubus idaeus",
-                displaySeason: "Juni & September",
-                pruning: "2x p/j (Selectief)",
+                iconType: 'raspberry', 
                 taste: "Klassiek framboos, zoet & stevig.",
-                info: "Snoei in de winter alleen de toppen weg die in de herfst vrucht droegen.",
-                iconType: 'raspberry', // Framboos
-                seasons: [{ startMonth: 5, startDay: 15, endMonth: 6, endDay: 30 }, { startMonth: 7, startDay: 15, endMonth: 9, endDay: 15 }]
+                // Oogst: Juni & Sept
+                harvestSeasons: [{ startMonth: 5, startDay: 15, endMonth: 6, endDay: 30 }, { startMonth: 7, startDay: 15, endMonth: 9, endDay: 15 }],
+                // Snoei: Winter (Jan/Feb)
+                pruningSeasons: [{ startMonth: 0, startDay: 1, endMonth: 1, endDay: 28 }]
             },
             {
                 id: 2,
                 name: "Tayberry",
                 latin: "Rubus Tayberry",
-                displaySeason: "Juni - Juli",
-                pruning: "Jaarlijks (Na oogst)",
-                taste: "Aromatisch, kruising braam/framboos, licht zuur.",
-                info: "Snoei alle takken die gedragen hebben direct na de oogst tot de grond.",
                 iconType: 'raspberry',
-                seasons: [{ startMonth: 5, startDay: 25, endMonth: 6, endDay: 20 }]
+                taste: "Aromatisch, kruising braam/framboos.",
+                // Oogst: Juni/Juli
+                harvestSeasons: [{ startMonth: 5, startDay: 25, endMonth: 6, endDay: 20 }],
+                // Snoei: Direct NA oogst (Eind Juli / Aug)
+                pruningSeasons: [{ startMonth: 6, startDay: 25, endMonth: 7, endDay: 30 }]
             },
             {
                 id: 3,
                 name: "Fallgold",
                 latin: "Rubus idaeus 'Fallgold'",
-                displaySeason: "Juli - September",
-                pruning: "Jaarlijks (Winter)",
-                taste: "Goudgeel, honingachtig zoet & zacht.",
-                info: "Herfstframboos. Knip in de late winter alle takken af tot 10cm boven de grond.",
                 iconType: 'raspberry',
-                seasons: [{ startMonth: 6, startDay: 10, endMonth: 8, endDay: 20 }]
+                taste: "Goudgeel, honingachtig zoet.",
+                // Oogst: Juli-Sept
+                harvestSeasons: [{ startMonth: 6, startDay: 10, endMonth: 8, endDay: 20 }],
+                // Snoei: Winter (Jan/Feb)
+                pruningSeasons: [{ startMonth: 0, startDay: 1, endMonth: 1, endDay: 28 }]
             },
             {
                 id: 4,
                 name: "Twotimer Solu Red",
                 latin: "Rubus idaeus",
-                displaySeason: "Juni & Augustus",
-                pruning: "2x p/j (Selectief)",
-                taste: "Zeer sappig, grote vrucht, uitstekende smaak.",
-                info: "Knip in zomer oude takken weg, in winter enkel de gedragen toppen.",
                 iconType: 'raspberry',
-                seasons: [{ startMonth: 5, startDay: 20, endMonth: 6, endDay: 25 }, { startMonth: 7, startDay: 15, endMonth: 8, endDay: 30 }]
+                taste: "Zeer sappig, grote vrucht.",
+                // Oogst: Juni & Aug
+                harvestSeasons: [{ startMonth: 5, startDay: 20, endMonth: 6, endDay: 25 }, { startMonth: 7, startDay: 15, endMonth: 8, endDay: 30 }],
+                // Snoei: Winter (Jan/Feb)
+                pruningSeasons: [{ startMonth: 0, startDay: 1, endMonth: 1, endDay: 28 }]
             },
             {
                 id: 5,
                 name: "Autumn Passion",
                 latin: "Rubus idaeus x occidentalis",
-                displaySeason: "Juli - Augustus",
-                pruning: "Jaarlijks (Winter)",
-                taste: "Exotisch, rokerig & zwarte bessen-aroma.",
-                info: "Groeit krachtig. Kan als herfstframboos gesnoeid worden (alles weg in winter).",
                 iconType: 'raspberry',
-                seasons: [{ startMonth: 6, startDay: 15, endMonth: 7, endDay: 30 }]
+                taste: "Exotisch, rokerig aroma.",
+                // Oogst: Juli-Aug
+                harvestSeasons: [{ startMonth: 6, startDay: 15, endMonth: 7, endDay: 30 }],
+                // Snoei: Winter (Jan/Feb)
+                pruningSeasons: [{ startMonth: 0, startDay: 1, endMonth: 1, endDay: 28 }]
             },
             {
                 id: 6,
                 name: "Jonkheer van Tets",
                 latin: "Ribes rubrum",
-                displaySeason: "Eind Juni",
-                pruning: "Jaarlijks (Winter)",
-                taste: "Friszuur, sappig (Rode aalbes).",
-                info: "Snoei in de winter (jan-mrt). Houd de struik luchtig.",
-                iconType: 'redcurrant', // Rode bes
-                seasons: [{ startMonth: 5, startDay: 20, endMonth: 6, endDay: 15 }]
+                iconType: 'redcurrant',
+                taste: "Friszuur, sappig (Rode bes).",
+                // Oogst: Juni
+                harvestSeasons: [{ startMonth: 5, startDay: 20, endMonth: 6, endDay: 15 }],
+                // Snoei: Winter (Jan-Maart)
+                pruningSeasons: [{ startMonth: 0, startDay: 1, endMonth: 2, endDay: 15 }]
             },
-            // NIEUW KAARTJE: Charlotte Aardbei
             {
                 id: 7,
                 name: "Charlotte Aardbei",
                 latin: "Fragaria ananassa",
-                displaySeason: "Juni - Oktober", // Doordragend
-                pruning: "Jaarlijks (Na winter)",
-                taste: "Zoet, aromatisch, bosaardbei-achtig.",
-                info: "Doordragende aardbei. Verwijder eerste bloemen voor sterkere plant. Knip uitlopers weg.",
-                iconType: 'strawberry', // Aardbei
-                seasons: [
-                    // Ruim seizoen voor doordragers
-                    { startMonth: 5, startDay: 15, endMonth: 9, endDay: 15 }
-                ]
+                iconType: 'strawberry',
+                taste: "Zoet, bosaardbei-achtig.",
+                // Oogst: Juni-Okt
+                harvestSeasons: [{ startMonth: 5, startDay: 15, endMonth: 9, endDay: 15 }],
+                // Snoei: Maart (Oud blad wegknippen)
+                pruningSeasons: [{ startMonth: 2, startDay: 1, endMonth: 2, endDay: 31 }]
             }
         ];
 
-        // --- ACTIE BALK LOGICA ---
-        function updateActionBar() {
-            const now = new Date();
-            const month = now.getMonth(); 
-            let msg = "";
-            let icon = "🌱";
-
-            if (month === 0 || month === 1) { // Jan-Feb
-                msg = "Wintertijd: Hét moment om de herfstframbozen en aalbessen te snoeien. Verwijder ook oud blad bij de aardbeien.";
-                icon = "✂️";
-            } else if (month === 2) { // Maart
-                msg = "Maart: Tijd om te mesten! Geef alle rode vruchten wat organische voeding.";
-                icon = "💩";
-            } else if (month === 3 || month === 4) { // Apr-Mei
-                msg = "Lente: Houd de grond onkruidvrij. Leg stro onder de aardbeien zodra er vruchtjes komen.";
-                icon = "🍓";
-            } else if (month >= 5 && month <= 8) { // Jun-Sept
-                msg = "Oogstseizoen! Controleer dagelijks op rijp fruit. Pluk de Charlotte aardbeien regelmatig door.";
-                icon = "🧺";
-            } else if (month === 9 || month === 10) { // Okt-Nov
-                msg = "Herfst: Na de laatste oogst kun je eventueel al wat snoeien of opbinden.";
-                icon = "🍂";
-            } else { // Dec
-                msg = "Rusttijd in de tuin van Lou en Noé.";
-                icon = "💤";
-            }
-
-            document.getElementById('actionText').innerText = msg;
-            document.querySelector('.action-icon').innerText = icon;
-        }
-
-        function getNextHarvest(seasons) {
+        // --- ALGEMENE LOGICA ---
+        function getNextEvent(seasons) {
             const now = new Date();
             const currentYear = now.getFullYear();
             let possibilities = [];
@@ -396,6 +313,7 @@
                 let start = new Date(currentYear, season.startMonth, season.startDay);
                 let end = new Date(currentYear, season.endMonth, season.endDay);
                 possibilities.push({ start, end });
+                // Volgend jaar ook checken
                 let startNext = new Date(currentYear + 1, season.startMonth, season.startDay);
                 let endNext = new Date(currentYear + 1, season.endMonth, season.endDay);
                 possibilities.push({ start: startNext, end: endNext });
@@ -405,41 +323,43 @@
 
             for (let p of possibilities) {
                 if (now >= p.start && now <= p.end) {
-                    return { status: 'active', date: p.end }; 
+                    return { status: 'active', date: p.end, type: 'active' }; 
                 }
                 if (now < p.start) {
-                    return { status: 'upcoming', date: p.start };
+                    return { status: 'upcoming', date: p.start, type: 'upcoming' };
                 }
             }
-            return { status: 'upcoming', date: possibilities[0].start };
+            return { status: 'upcoming', date: possibilities[0].start }; // Fallback
         }
 
-        function calculateProgress(targetDate) {
+        function calculateProgress(targetDate, maxDays = 300) {
             const now = new Date();
-            const maxWaitDays = 300; 
             const diffTime = targetDate - now;
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
             
             if (diffDays <= 0) return 100;
-            let percentage = 100 - ((diffDays / maxWaitDays) * 100);
+            let percentage = 100 - ((diffDays / maxDays) * 100);
             return Math.max(5, Math.min(100, percentage));
         }
 
-        // NIEUWE FUNCTIE: Kiest het juiste icoon op basis van type en progressie
-        function getGrowthIcon(percentage, isActive, iconType) {
-            // Bepaal het eind-icoon op basis van het type
-            let finalIcon = "🍇"; // Default framboos
+        // --- ICON LOGICA ---
+        function getHarvestIcon(percentage, isActive, iconType) {
+            let finalIcon = "🍇"; 
             if (iconType === 'strawberry') finalIcon = "🍓";
-            if (iconType === 'redcurrant') finalIcon = "🍒"; // Kersjes als symbool voor kleine rode besjes
+            if (iconType === 'redcurrant') finalIcon = "🍒";
 
             if (isActive) return finalIcon;
-            
-            // Groeifases
-            if (percentage < 20) return "🌱"; 
-            if (percentage < 45) return "🌿"; 
-            if (percentage < 70) return "🌳"; 
+            if (percentage < 30) return "🌱"; 
+            if (percentage < 60) return "🌿"; 
             if (percentage < 90) return "🌸"; 
-            return finalIcon; // Toon het fruit net voor de oogst
+            return finalIcon;
+        }
+
+        function getPruningIcon(percentage, isActive) {
+            if (isActive) return "✂️"; // Nu snoeien!
+            if (percentage < 40) return "🍃"; // Vol in blad
+            if (percentage < 80) return "🍂"; // Blad valt
+            return "🪵"; // Kaal hout
         }
 
         let hasActiveHarvest = false;
@@ -451,80 +371,92 @@
             hasActiveHarvest = false;
 
             fruitData.forEach(fruit => {
-                const harvestInfo = getNextHarvest(fruit.seasons);
-                let displayText = "";
-                let subText = "";
-                let progress = 0;
-                let isActive = false;
+                // 1. OOGST INFO
+                const harvestInfo = getNextEvent(fruit.harvestSeasons);
+                let harvestDays = Math.ceil((harvestInfo.date - now) / (1000 * 60 * 60 * 24));
+                let harvestProgress = harvestInfo.status === 'active' ? 100 : calculateProgress(harvestInfo.date);
+                if (harvestInfo.status === 'active') hasActiveHarvest = true;
+                let harvestLabel = harvestInfo.status === 'active' ? "PLUKKEN MAAR!" : `${harvestDays} dagen tot oogst`;
+                let harvestIcon = getHarvestIcon(harvestProgress, harvestInfo.status === 'active', fruit.iconType);
 
-                if (harvestInfo.status === 'active') {
-                    displayText = "NU!";
-                    subText = "Oogsttijd";
-                    progress = 100;
-                    isActive = true;
-                    hasActiveHarvest = true;
-                } else {
-                    const diffTime = harvestInfo.date - now;
-                    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-                    displayText = diffDays;
-                    subText = diffDays === 1 ? "Dag te gaan" : "Dagen te gaan";
-                    progress = calculateProgress(harvestInfo.date);
-                }
+                // 2. SNOEI INFO
+                const pruningInfo = getNextEvent(fruit.pruningSeasons);
+                let pruningDays = Math.ceil((pruningInfo.date - now) / (1000 * 60 * 60 * 24));
+                let pruningProgress = pruningInfo.status === 'active' ? 100 : calculateProgress(pruningInfo.date, 365); // Snoei kijkt heel jaar vooruit
+                let pruningLabel = pruningInfo.status === 'active' ? "NU SNOEIEN!" : `${pruningDays} dagen tot snoei`;
+                let pruningIcon = getPruningIcon(pruningProgress, pruningInfo.status === 'active');
 
-                // Geef het iconType mee aan de functie
-                const icon = getGrowthIcon(progress, isActive, fruit.iconType);
-                
-                // Kleuren bepalen: Aardbei krijgt rood accent, rest roze
+                // Styling voor aardbei rood vs framboos roze
                 const isStrawberry = fruit.iconType === 'strawberry';
-                const activeColor = isActive ? (isStrawberry ? '#ef4444' : '#db2777') : (isStrawberry ? '#f87171' : '#ec4899');
-                const gradientEnd = isStrawberry ? '#ef4444' : 'var(--accent-pink)';
-
+                const mainColor = isStrawberry ? '#ef4444' : '#ec4899';
+                
+                // HTML GENERATIE
                 const cardHTML = `
-                    <div class="fruit-card" style="${isStrawberry ? 'border-color: rgba(239, 68, 68, 0.5); box-shadow: 0 0 20px rgba(239, 68, 68, 0.4), inset 0 0 20px rgba(239, 68, 68, 0.05);' : ''}">
-                        <div>
-                            <div class="header-section">
-                                <div>
-                                    <h2 class="fruit-name" style="${isStrawberry ? 'color: #f87171; text-shadow: 0 0 10px rgba(239, 68, 68, 0.5);' : ''}">${fruit.name}</h2>
-                                    <span class="latin-name">${fruit.latin}</span>
-                                </div>
-                                <div class="fruit-number" style="${isStrawberry ? 'background: rgba(239, 68, 68, 0.2); border-color: #ef4444;' : ''}">${fruit.id}</div>
+                    <div class="fruit-card" style="border-color: ${mainColor}80; box-shadow: 0 0 15px ${mainColor}40;">
+                        <div class="header-section">
+                            <div>
+                                <h2 class="fruit-name" style="color: ${mainColor}">${fruit.name}</h2>
+                                <span class="latin-name">${fruit.latin}</span>
                             </div>
-                            
-                            <div class="badges">
-                                <div class="season-badge">📅 ${fruit.displaySeason}</div>
-                                <div class="pruning-badge">✂️ ${fruit.pruning}</div>
-                            </div>
+                            <div class="fruit-number" style="background: ${mainColor}30; border-color: ${mainColor}">${fruit.id}</div>
+                        </div>
 
-                            <div class="countdown-container">
-                                <div class="days-left">${displayText}</div>
-                                <div class="label">${subText}</div>
+                        <div class="track-container">
+                            <div class="track-label">
+                                <span>Oogsten</span>
+                                <span>${harvestLabel}</span>
                             </div>
-
-                            <div class="growth-track">
-                                <div class="growth-vine" style="width: ${progress}%; background: linear-gradient(90deg, #4ade80, ${gradientEnd})">
-                                    <div class="growth-icon" style="transform: scale(${1 + (progress/100)})">${icon}</div>
+                            <div class="track-bg">
+                                <div class="track-fill harvest-fill" style="width: ${harvestProgress}%; background: linear-gradient(90deg, #4ade80, ${mainColor})">
+                                    <div class="track-icon" style="transform: scale(${1 + (harvestProgress/100)})">${harvestIcon}</div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="info-box" style="border-left-color: ${activeColor}">
-                            <div class="info-row">
-                                <span class="highlight-label taste-label">🍬 Smaak:</span>
-                                ${fruit.taste}
+                        <div class="track-container">
+                            <div class="track-label">
+                                <span>Snoeien</span>
+                                <span style="color: ${pruningInfo.status === 'active' ? '#f97316' : '#aaa'}">${pruningLabel}</span>
                             </div>
-                            <div class="info-row">
-                                <span class="highlight-label tip-label">🌱 Tip:</span>
-                                ${fruit.info}
+                            <div class="track-bg">
+                                <div class="track-fill pruning-fill" style="width: ${pruningProgress}%;">
+                                    <div class="track-icon">${pruningIcon}</div>
+                                </div>
                             </div>
+                        </div>
+
+                        <div class="info-box">
+                            <span class="highlight-label">🍬 Smaak:</span> ${fruit.taste}
                         </div>
                     </div>
                 `;
                 container.innerHTML += cardHTML;
             });
 
-            if(hasActiveHarvest) {
-                startConfetti();
+            if(hasActiveHarvest) startConfetti();
+        }
+
+        // --- UPDATE ACTIE BALK (Boven) ---
+        function updateActionBar() {
+            const month = new Date().getMonth(); 
+            let msg = "";
+            let icon = "🌱";
+
+            if (month <= 1) { // Jan-Feb
+                msg = "✂️ WINTERSNOEI: De frambozen en aalbessen moeten nu gesnoeid worden!";
+                icon = "❄️";
+            } else if (month === 2) { 
+                msg = "💩 Maart: Tijd om te mesten en de aardbeien (Charlotte) op te schonen.";
+                icon = "🌱";
+            } else if (month >= 5 && month <= 8) { 
+                msg = "🧺 Oogsttijd! Controleer dagelijks de struiken van Lou en Noé.";
+                icon = "🍓";
+            } else {
+                msg = "🍂 Herfst: Bereid de tuin voor op de rustperiode.";
+                icon = "🧣";
             }
+            document.getElementById('actionText').innerText = msg;
+            document.querySelector('.action-icon').innerText = icon;
         }
 
         function startConfetti() {
@@ -532,18 +464,16 @@
             const ctx = canvas.getContext("2d");
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-
             const particles = [];
             for(let i=0; i<100; i++) {
                 particles.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height - canvas.height,
                     speed: Math.random() * 3 + 1,
-                    color: `hsl(${Math.random() * 50 + 330}, 100%, 50%)`, // Meer rode/roze tinten confetti
+                    color: `hsl(${Math.random() * 50 + 330}, 100%, 50%)`,
                     size: Math.random() * 6 + 2
                 });
             }
-
             function draw() {
                 ctx.clearRect(0,0, canvas.width, canvas.height);
                 particles.forEach(p => {
